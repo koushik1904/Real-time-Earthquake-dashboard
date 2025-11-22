@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Real-time Earthquake Dashboard</title>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet (map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <link rel="stylesheet" href="styling.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌍 Real-time Earthquake Dashboard</h1>
+
+    <div class="controls">
+      <label>Time window:
+        <select id="timeWindow">
+          <option value="hour">Last hour</option>
+          <option value="day">Last day</option>
+          <option value="week" selected>Last 7 days</option>
+        </select>
+      </label>
+
+      <label>Min magnitude:
+        <select id="minMag">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label>
+
+      <label>Region search:
+        <input id="region" placeholder="e.g. Alaska, California" />
+      </label>
+
+      <label class="compare-label">
+        <input id="autoRefresh" type="checkbox" checked /> Auto-refresh (30s)
+      </label>
+
+      <button id="applyBtn">Apply Filters</button>
+      <button id="refreshBtn">Refresh Now</button>
+    </div>
+
+    <div id="status" class="status">Loading...</div>
+
+    <div class="layout">
+      <div class="left">
+        <div class="chart-card">
+          <canvas id="lineChart"></canvas>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-card">
+            <canvas id="barChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <h3>Latest Events</h3>
+          <table id="eventsTable">
+            <thead><tr><th>Time (UTC)</th><th>Mag</th><th>Depth (km)</th><th>Place</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="right">
+        <div id="map" style="height:600px;"></div>
+        <div class="legend">Data source: USGS GeoJSON feeds. Example feed used for "last 7 days": <code>https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson</code></div>
+        <div class="uploaded-file">Uploaded file (for report / screenshot): <code>/mnt/data/3a4e1293-ceff-4b47-b462-fac8f711b877.png</code></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <small>Auto-refresh interval: 30 seconds. Use the controls above to filter or refresh immediately.</small>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
